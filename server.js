@@ -18,7 +18,20 @@ const friends = [
 ]
 
 app.get('/', (req,res) => {
-    res.send("Hello there!")
+    res.json(friends)
+})
+
+app.get('/friends/:friendID', (req,res)=>{
+    // after the : above, Express will take whatever parameter comes here as the location to search
+    const friendID = Number(req.params.friendID)
+    const friend = friends[friendID]
+    if (friend) {
+        res.status(200).json(friend)
+    } else {
+        res.status(404).json({
+            error: "Friend at this address does not exist"
+        });
+    }
 })
 
 app.get('/message', (req,res) => {
