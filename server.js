@@ -1,5 +1,8 @@
 const express = require('express')
 const app = express()
+const messagesController = require('./Controllers/messages.controller')
+const friendsController = require('./Controllers/friends.controller')
+
 const PORT = 3000
 
 const friends = [
@@ -35,16 +38,16 @@ app.post('/friends', (req,res) => {
         return res.status(400).json({
             Error: "No friend name included in request"
         })
-    } else {
-        const newFriend = {
-            id: friends.length,
-            name: req.body.name
-        }
-        friends.push(newFriend)
-        res.status(200).json(newFriend)
-        console.log(friends)
     }
-})
+    const newFriend = {
+        id: friends.length,
+        name: req.body.name
+        }
+    friends.push(newFriend)
+    res.status(200).json(newFriend)
+    console.log(friends)
+    }
+)
 
 // route for getting the full list of friends
 app.get('/friends', (req,res) => {
@@ -65,6 +68,11 @@ app.get('/friends/:friendID', (req,res)=>{
         });
     }
 })
+
+app.get('/messages', messagesController.getMessages)
+
+app.post('/messages', messagesController.postMessage)
+
 
 // set listening to port
 app.listen(PORT, () => {
