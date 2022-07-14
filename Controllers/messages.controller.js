@@ -1,5 +1,6 @@
 function postMessage (req,res) {
     console.log("Updating messages...")
+    res.status(200).json("Updating messages...")
 }
 
 function getMessages (req, res) {
