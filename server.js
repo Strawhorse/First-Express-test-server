@@ -1,4 +1,7 @@
-const express = require('express')
+const express = require('express');
+const { join } = require('path');
+const path = require('path')
+
 
 const friendsRouter = require('./routes/friends.router');
 const messagesRouter = require('./routes/messages.router');
@@ -12,9 +15,12 @@ app.use((req,res,next) => {
     const start = Date.now()
     next();
     const delta = Date.now() - start
-    console.log(`${req.method} ${req.url} ${delta}ms`)
+    console.log(`${req.method} ${req.baseUrl}${req.url} ${delta}ms`)
     // always call next() function or middleware will not release request and it will time out
 })
+
+app.use('/site', express.static(path.join(__dirname, 'public')))
+// middleware that serves everything under a particular relative path
 
 // middleware which looks at Content-Type and parses it if it is json, so can then be added to our list of contacts
 app.use(express.json())
