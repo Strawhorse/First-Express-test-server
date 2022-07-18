@@ -9,7 +9,11 @@ function postMessage (req,res) {
 
 function getMessages (req, res) {
     // res.send('<ul><li>Hi there!</li></ul>')
-    res.sendFile(path.join(__dirname, '..', 'public', 'images', 'space.jpg'))
+    // res.sendFile(path.join(__dirname, '..', 'public', 'images', 'space.jpg'))
+    res.render('messages', {
+        title: 'Messages from the stars',
+        friend: 'JinJing',
+    })
 }
 
 module.exports  = {
