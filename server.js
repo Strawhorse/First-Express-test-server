@@ -2,13 +2,16 @@ const express = require('express');
 const { join } = require('path');
 const path = require('path')
 
-
 const friendsRouter = require('./routes/friends.router');
 const messagesRouter = require('./routes/messages.router');
 
 const PORT = 3000
 
 const app = express();
+
+// set handlebars templating engine - using views folder
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'))
 
 // add middleware to register how long request took
 app.use((req,res,next) => {
@@ -24,6 +27,14 @@ app.use('/site', express.static(path.join(__dirname, 'public')))
 
 // middleware which looks at Content-Type and parses it if it is json, so can then be added to our list of contacts
 app.use(express.json())
+
+// create a root route
+app.get('/', (req,res) => {
+    res.render('index', {
+        title: 'Into the wild frontier',
+        caption: 'Space',
+    })
+})
 
 // routes using express.Router to group together similar requests in a mini-app
 app.use('/friends', friendsRouter);
